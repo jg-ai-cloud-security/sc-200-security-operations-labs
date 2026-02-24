@@ -1,5 +1,3 @@
-
-
 \# Architecture Summary — SC200 Day 01
 
 
@@ -85,34 +83,4 @@ capability for identity-based threats.
 
 
 
-
-\## Security Architecture Overview
-
-
-
-User authentication events are collected via Entra ID logs
-
-and ingested into Log Analytics Workspace.
-
-
-
-Microsoft Sentinel acts as SIEM layer performing:
-
-\- Log aggregation
-
-\- Analytics rule evaluation
-
-\- Incident creation
-
-
-
-SOC analysts investigate incidents using entity correlation
-
-and KQL queries.
-
-
-
-Security Objective:
-
-Centralised threat detection and investigation workflow.
 
