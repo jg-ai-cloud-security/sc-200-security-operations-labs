@@ -1,4 +1,4 @@
-\# Architecture Summary — SC200 Day 01
+\# Architecture Summary — SC200 Day 02
 
 
 
@@ -37,50 +37,4 @@ and converted into incidents for investigation.
 Enable centralized detection and investigation
 
 capability for identity-based threats.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
