@@ -1,90 +1,90 @@
-\# SC-200 Day 01 — Sentinel Baseline + Azure Activity Detection
+\# SC-200 Day 02 — Microsoft Defender XDR (Investigation Flow + Advanced Hunting Baseline)
 
 
 
 \## Overview
 
-This lab establishes a Microsoft Sentinel baseline using the Unified Security Operations experience (Microsoft Defender portal) and validates an end-to-end SOC workflow using Azure Activity logs.
+This lab validates Microsoft Defender XDR access and documents the SOC investigation workflow (signals → alerts → incidents → entity pivots → hunting → response).  
 
-
-
-A scheduled analytics rule detects Azure RBAC role assignment changes and generates an alert → incident for investigation.
+In this tenant, alerts/incidents were not available yet, so Day 02 focused on baseline validation using portal checks and Advanced Hunting schema/queries.
 
 
 
 \## Objectives
 
-\- Deploy and enable Microsoft Sentinel on a Log Analytics Workspace
+\- Validate access to Microsoft Defender XDR (Incidents, Alerts, Advanced Hunting)
 
-\- Connect Azure Activity logs to Sentinel
+\- Confirm current alert/incident state in the tenant
 
-\- Validate ingestion using KQL queries
+\- Validate Advanced Hunting schema availability and execute baseline KQL queries
 
-\- Create a scheduled analytics rule to detect RBAC changes
-
-\- Generate test RBAC events and confirm incident creation
-
-\- Document evidence and architecture
+\- Document investigation workflow and next steps to enable telemetry
 
 
 
 \## Architecture (Diagram 01)
 
-\- Diagram: `SC200-Day01-Diagram-01-Sentinel-Baseline-AzureActivity.png`
+\- Diagram: `SC200-Day02-Diagram-01-DefenderXDR-Investigation-Flow.png`
 
-\- Flow: Admin action → Azure Activity Log → Sentinel connector → Log Analytics (AzureActivity) → Analytics rule → Alert/Incident → Defender Incidents Queue
-
-
-
-\## Resources Created
-
-\- Resource Group: `rg-sc200-sentinel-day01-uks-001` (update if different)
-
-\- Log Analytics Workspace: `law-sc200-day01-uks-001` (update if different)
-
-\- Microsoft Sentinel enabled on workspace
+\- Flow: Signals/Telemetry → Defender XDR correlation → Alerts → Incidents → Entity pivots → Advanced Hunting (KQL) → Response/Close
 
 
 
-\## Data Sources / Connectors
+\## Tenant State (Evidence-Based)
 
-\- ✅ Azure Activity (connected to subscription and sending events to LAW)
+\- Alerts/Incidents: 0 (in selected time range)
 
+\- Advanced Hunting schema tables available:
 
+&nbsp; - `AlertEvidence`
 
-\## Detection Rule Created
+&nbsp; - `BehaviorEntities`
 
-\*\*Name:\*\* `SC200-D01 - Azure RBAC Changes Detected`  
+&nbsp; - `BehaviorInfo`
 
-\*\*Type:\*\* Scheduled analytics rule  
+\- Note: `DeviceInfo` table not available (endpoint telemetry/MDE not onboarded yet)
 
-\*\*Schedule:\*\* Run every 5 minutes  
-
-\*\*Lookback:\*\* 1 hour  
-
-\*\*Creates incident:\*\* Yes  
-
-\*\*MITRE ATT\&CK:\*\* Privilege Escalation → Account Manipulation (T1098)
+\- Next step: onboard an endpoint / enable signal sources to generate richer telemetry and incidents
 
 
 
-\## KQL (stored in /04-KQL-Queries/)
+\## KQL Queries (stored in /04-KQL-Queries/)
 
-```kql
+\- `SC200-Day02-Hunting-Query01.kql`  
 
-AzureActivity
+&nbsp; - `AlertEvidence | take 50`
 
-| where TimeGenerated > ago(1h)
+\- `SC200-Day02-Hunting-Query02.kql`  
 
-| where OperationNameValue has\_any (
+&nbsp; - `BehaviorEntities | take 50`
 
-&nbsp; "Microsoft.Authorization/roleAssignments/write",
 
-&nbsp; "Microsoft.Authorization/roleAssignments/delete"
 
-)
+\## Evidence (Screenshots)
 
-| project TimeGenerated, Caller, OperationNameValue, ActivityStatusValue, ResourceGroup, ResourceId
+Stored in: `/03-Evidence/`  
 
-| order by TimeGenerated desc
+Recommended filenames:
+
+\- SC200-Day02-01-DefenderXDR-Portal-Home.png
+
+\- SC200-Day02-02-DefenderXDR-Alerts-0.png
+
+\- SC200-Day02-03-DefenderXDR-Incidents-0.png
+
+\- SC200-Day02-04-AdvancedHunting-Schema-DeviceTables.png
+
+\- SC200-Day02-06-AdvancedHunting-Query01-Results.png
+
+\- SC200-Day02-07-AdvancedHunting-Query02-Results.png
+
+
+
+\## What This Lab Proves
+
+\- Defender XDR provides a unified SOC workflow for alert/incident investigation.
+
+\- Advanced Hunting schema availability depends on enabled/onboarded Defender data sources.
+
+\- Baseline validation and evidence-driven documentation are essential before enabling detections at scale.
 
