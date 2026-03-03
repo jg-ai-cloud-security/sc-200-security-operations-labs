@@ -58,6 +58,20 @@
   - Saved hunting queries
 
 ## Lessons Learned
+
+• How Defender XDR investigation flows from signals → alerts → incidents → entity pivots → hunting → response.
+• Why some KQL tables (like DeviceInfo) may not exist if Defender for Endpoint isn’t onboarded.
+• How to use Schema in Advanced Hunting to confirm what telemetry is available.
+How to document SOC work even when there are 0 alerts/incidents (baseline validation is still a real SOC task
+
 - What went well:
+
+• Created SC200 Day 02 folder structure using your standard template.
+• Built Diagram 01: Defender XDR Investigation Flow (signals → incidents → hunting → response).
+• Captured evidence of tenant state and hunting schema availability.
+Created Day 02 documentation:
+
 - What to improve tomorrow:
+Enable telemetry/onboard endpoint for real incident
+
 - Tomorrow goal: onboard endpoint / enable signal sources and re-test hunting tables
