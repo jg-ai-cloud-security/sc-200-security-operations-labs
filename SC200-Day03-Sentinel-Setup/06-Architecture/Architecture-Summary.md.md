@@ -1,4 +1,4 @@
-\# Architecture Summary — SC200 Day 03
+\# Architecture Summary — SC200 Day 02
 
 
 

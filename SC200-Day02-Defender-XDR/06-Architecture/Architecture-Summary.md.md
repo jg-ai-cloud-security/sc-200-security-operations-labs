@@ -1,40 +1,24 @@
-\# Architecture Summary — SC200 Day 02
+\# SC-200 Day 02 — Architecture Notes (Defender XDR)
 
 
 
-\## Overview
+\## Diagram 01 — Defender XDR Investigation Flow
 
-This lab establishes a basic Security Operations Center (SOC)
+\### What This Diagram Proves — Day 02
 
-monitoring architecture using Microsoft Sentinel.
+\- Defender XDR correlates signals from Endpoint/Email/Identity/Cloud Apps into Alerts and Incidents.
 
+\- SOC investigation pivots through entities (User, Device, IP, Mailbox).
 
-
-\## Components
-
-\- Entra ID: generates authentication logs
-
-\- Log Analytics Workspace: centralized log storage
-
-\- Microsoft Sentinel: SIEM platform
-
-\- Analytics Rules: detect suspicious behaviour
+\- Advanced Hunting (KQL) validates and enriches findings before response/closure.
 
 
 
-\## Security Flow
+\## Current Tenant State (Evidence-Based)
 
-User authentication events are collected from Entra ID,
+\- Alerts/Incidents currently 0 in portal.
 
-ingested into Log Analytics, analysed by Sentinel,
+\- Advanced Hunting schema tables available: AlertEvidence, BehaviorEntities, BehaviorInfo.
 
-and converted into incidents for investigation.
-
-
-
-\## Security Objective
-
-Enable centralized detection and investigation
-
-capability for identity-based threats.
+\- Next step: onboard endpoint / enable signal sources to generate richer telemetry.
 
