@@ -1,60 +1,158 @@
-# SC-200 Day 04 — Sentinel Detections + SOAR (Automation)
+# SC-200 Day 05 — Sentinel Detection Engineering
 
 ## Overview
-Today I focused on detection engineering in Microsoft Sentinel by turning KQL queries into scheduled analytics rules and proving SOAR automation using an Automation Rule + Playbook (Logic App).
+
+Today I focused on implementing detection engineering in Microsoft Sentinel by creating a scheduled analytics rule to detect brute-force login attempts using KQL queries.
+
+This lab demonstrates how SOC analysts transform detection logic into automated alerts and incidents that can be investigated within the Sentinel platform.
+
+---
+
+## Business Scenario
+
+BrightSpark Electrical Services Ltd is a small electrical contractor company whose employees remotely access company systems and cloud services.
+
+The organisation recently implemented Microsoft Sentinel to improve security monitoring and gain visibility into authentication activity across their environment.
+
+---
+
+## Business Problem
+
+Without centralized monitoring, repeated failed login attempts targeting employee accounts could go unnoticed. This increases the risk of brute-force attacks that may lead to unauthorized system access.
+
+The company needs automated detection capabilities to identify suspicious authentication behaviour.
+
+---
+
+## Security Solution
+
+Microsoft Sentinel provides centralized monitoring of authentication events. By creating analytics rules powered by KQL queries, the SOC team can automatically detect repeated failed login attempts and generate incidents for investigation.
+
+---
+
+## Security Benefits
+
+• Early detection of credential attack attempts  
+• Centralized monitoring of authentication events  
+• Automated incident creation for SOC investigation  
+• Improved visibility of suspicious login activity
+
+---
 
 ## Objectives
-- Create and test 3 KQL detections
-- Convert each detection into a Scheduled Analytics Rule (SOC cadence: every 5 minutes)
-- Generate Sentinel incidents and validate entity mapping (Account / Host / IP)
-- Build an Automation Rule to trigger a Playbook when incidents are created
-- Save a workbook to visualise incidents/detections
+
+Create and test a KQL query to detect failed login attempts
+
+Convert the query into a Scheduled Analytics Rule
+
+Enable incident creation and entity mapping
+
+Document detection workflow and architecture
+
+---
 
 ## What I Built
-### Detections (KQL)
-- Brute-force style failed logons (threshold-based)
-- New admin/group membership change detection
-- Suspicious PowerShell execution patterns
 
-Saved in: `/04-KQL-Queries`
+### Detection (KQL)
 
-### Analytics Rules
-- 3 Scheduled query rules created
-- Frequency: 5 minutes
-- Lookback: 10 minutes
-- Entity mapping enabled
-- Incident creation enabled
-- Grouping/tuning applied to reduce noise
+Brute force login detection using Windows Security Event logs.
 
-### SOAR Automation
-- Playbook (Logic App) triggered on incident creation
-- Automation Rule configured to auto-run playbook
-- Proof action: playbook adds a comment to the incident (run history captured)
+Query detects repeated failed logon attempts within a short timeframe.
 
-### Visibility
-- Workbook saved to monitor incidents/detections
+Saved in:
+
+/04-KQL-Queries/bruteforce-detection.kql
+
+---
+
+### Analytics Rule
+
+Scheduled query rule created in Microsoft Sentinel.
+
+Configuration:
+
+Run frequency: 5 minutes  
+Lookback window: 5 minutes  
+Alert threshold: results greater than 0
+
+Features enabled:
+
+Entity mapping (Account / Host)
+
+Incident creation enabled
+
+---
+
+### Investigation
+
+KQL query executed successfully in Sentinel Logs.
+
+Due to the lab environment not generating Windows Security Event logs, no results were returned. However, the detection rule was correctly configured and validated.
+
+---
+
+### Architecture
+
+Detection workflow implemented:
+
+Log Sources  
+↓  
+Log Analytics Workspace  
+↓  
+Microsoft Sentinel  
+↓  
+KQL Detection Query  
+↓  
+Scheduled Analytics Rule  
+↓  
+Alert  
+↓  
+Incident  
+↓  
+SOC Investigation
+
+Architecture documentation stored in:
+
+/06-Architecture
+
+---
 
 ## Evidence (Screenshots)
-Stored in: `/03-Evidence`
-- SC200-Day04-01-Workspace-DataConnected.png
-- SC200-Day04-02-KQL-*-Query-Test.png
-- SC200-Day04-03-AnalyticsRule-*-Created.png
-- SC200-Day04-04-EntityMapping-Configured.png
-- SC200-Day04-05-Incident-Created.png
-- SC200-Day04-06-AutomationRule-Created.png
-- SC200-Day04-07-Playbook-Run-History.png
-- SC200-Day04-08-Incident-Comment-AddedByPlaybook.png
-- SC200-Day04-09-Workbook-Saved.png
+
+Stored in:
+
+/03-Evidence
+
+SC200-Day05-01-KQL-BruteforceQuery.png  
+SC200-Day05-02-AnalyticsRule-Created.png  
+SC200-Day05-03-RuleLogic-Configured.png  
+SC200-Day05-04-IncidentSettings-Configured.png  
+SC200-Day05-05-AnalyticsRules-List.png
+
+---
 
 ## Challenges / Notes
-- Licensing constraints (no P1/P2). Focus remained on Sentinel-native detections + automation proof using available data sources.
+
+The lab environment does not generate Windows Security Event logs, therefore the detection query returned no results.
+
+This scenario is common in lab environments and does not affect the validity of the detection logic implemented.
+
+---
 
 ## Key Takeaways
-- Running analytics rules every 5 minutes is realistic for SOC operations and improves time-to-detect.
-- Entity mapping is critical because it makes incidents investigation-ready.
-- Automation Rules + Playbooks provide repeatable response actions and consistent SOC workflow.
 
-## Next Steps (Day 05)
-- Add Watchlists (VIP users, risky IPs) for enrichment
-- Improve workbook visuals and add custom tiles
-- Expand detections with better thresholds, suppression and grouping
+Detection engineering is a critical SOC capability that converts threat detection logic into automated alerts.
+
+Scheduled analytics rules allow SOC teams to continuously monitor log data and detect suspicious behaviour.
+
+Entity mapping enriches alerts with contextual information such as user accounts and host systems.
+
+---
+
+## Next Steps (Day 06)
+
+Perform threat hunting using KQL queries
+
+Investigate suspicious authentication patterns
+
+Build advanced hunting queries to detect anomalies in authentication logs

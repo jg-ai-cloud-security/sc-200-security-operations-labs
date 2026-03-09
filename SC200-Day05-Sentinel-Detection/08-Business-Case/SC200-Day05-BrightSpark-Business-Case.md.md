@@ -10,11 +10,11 @@ BrightSpark Electrical Services Ltd is a small electrical contractor company who
 
 
 
-The company is beginning to implement centralized security monitoring using Microsoft Sentinel.
+An organization collects Windows security logs from on-premises servers connected to Azure through Azure Arc.  
+
+The SOC team uses Microsoft Sentinel to monitor authentication activity and detect suspicious login behavior across the environment.
 
 
-
----
 
 
 
@@ -22,15 +22,9 @@ The company is beginning to implement centralized security monitoring using Micr
 
 
 
-Without centralized security monitoring, repeated failed login attempts targeting employee accounts may go undetected.
+The organization currently lacks automated detection mechanisms to identify brute force login attempts.  
 
-
-
-This increases the risk of unauthorized access and potential compromise of company systems.
-
-
-
----
+Without detection rules, repeated failed login attempts may go unnoticed, increasing the risk of unauthorized access to systems.
 
 
 
@@ -42,25 +36,23 @@ Microsoft Sentinel provides centralized monitoring of authentication events and 
 
 
 
----
-
-
-
 \## Security Benefits
 
 
 
-• Early detection of account compromise attempts  
+• Early detection of account compromise attempts
 
-• Centralized log monitoring across systems  
 
-• Automated alert and incident generation  
+
+• Centralized log monitoring across systems
+
+
+
+• Automated alert and incident generation
+
+
 
 • Improved security visibility for small businesses
-
-
-
----
 
 
 
